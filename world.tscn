@@ -1,0 +1,148 @@
+[gd_scene load_steps=13 format=3 uid="uid://cbvnws21jha45"]
+
+[ext_resource type="Script" path="res://6.gd" id="2_sa5dh"]
+[ext_resource type="Script" path="res://playermovement.gd" id="2_ye60e"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_diidr"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_bry4a"]
+sky_material = SubResource("ProceduralSkyMaterial_diidr")
+
+[sub_resource type="Environment" id="Environment_6w87g"]
+background_mode = 2
+sky = SubResource("Sky_bry4a")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eb6pu"]
+albedo_color = Color(0.486275, 0.988235, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g1hl1"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_eprg3"]
+points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nsb4f"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0efni"]
+points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejavl"]
+albedo_color = Color(0.160784, 0.364706, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grx5o"]
+albedo_color = Color(0.928299, 0.448908, 0.52497, 1)
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6w87g")
+
+[node name="floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999868, 0.0162483, 0, -0.0162483, 0.999868, -23.9802, -0.515534, -6.44854)
+use_collision = true
+size = Vector3(65.768, 0.343994, 22.641)
+material = SubResource("StandardMaterial3D_eb6pu")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.476412, -3.51332)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30042, 0)
+mesh = SubResource("CapsuleMesh_g1hl1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30042, 0)
+shape = SubResource("ConvexPolygonShape3D_eprg3")
+
+[node name="CoyoteTimer" type="Timer" parent="CharacterBody3D"]
+wait_time = 0.15
+one_shot = true
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.476412, 0)
+physics_material_override = SubResource("PhysicsMaterial_nsb4f")
+lock_rotation = true
+script = ExtResource("2_ye60e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30042, 0)
+mesh = SubResource("CapsuleMesh_g1hl1")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30042, 0)
+shape = SubResource("ConvexPolygonShape3D_0efni")
+
+[node name="Head" type="Node3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77355, 0)
+
+[node name="Camera3D" type="Camera3D" parent="RigidBody3D/Head"]
+
+[node name="CoyoteTimer" type="Timer" parent="RigidBody3D"]
+wait_time = 0.15
+one_shot = true
+
+[node name="RayCast3D" type="RayCast3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.889945, -0.0274236)
+
+[node name="left" type="RayCast3D" parent="RigidBody3D"]
+transform = Transform3D(0.0310792, 0.999517, 0, -0.999517, 0.0310792, 0, 0, 0, 1, -0.286952, 0.816607, -0.0917721)
+
+[node name="right" type="RayCast3D" parent="RigidBody3D"]
+transform = Transform3D(-0.0555875, -0.997907, 0.0330773, 0.194955, 0.0216429, 0.980574, -0.979236, 0.0609562, 0.193344, 0.21031, 0.67105, -0.0205576)
+
+[node name="front" type="RayCast3D" parent="RigidBody3D"]
+transform = Transform3D(-0.00253515, -0.0875725, -0.996157, -0.999611, 0.0279357, 8.77529e-05, 0.0278205, 0.995767, -0.0876091, -0.011981, 0.605633, 0.0201715)
+
+[node name="back" type="RayCast3D" parent="RigidBody3D"]
+transform = Transform3D(0.795135, 0.0140377, -0.606274, 0.606054, 0.0170788, 0.795242, 0.0215177, -0.999757, 0.00507237, 0.0214328, 0.574325, 0.00780546)
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="2" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.1139, 2.28109, -7.08862)
+use_collision = true
+size = Vector3(3.58864, 6.75793, 30.4995)
+
+[node name="3" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(-0.0444215, 0, 0.999013, 0, 1, 0, -0.999013, 0, -0.0444215, -30.7376, 2.21398, 6.52423)
+use_collision = true
+size = Vector3(3.58864, 6.75793, 74.6262)
+material = SubResource("StandardMaterial3D_ejavl")
+
+[node name="4" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.174, 2.14577, -7.0194)
+use_collision = true
+size = Vector3(3.58864, 6.75793, 30.4995)
+
+[node name="5" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(-0.0444215, 0, 0.999013, 0, 1, 0, -0.999013, 0, -0.0444215, -27.5135, 2.21398, -17.9387)
+use_collision = true
+size = Vector3(3.58864, 6.75793, 68.1716)
+
+[node name="7" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(-0.932689, 0.360681, 0, -0.360681, -0.932689, 0, 0, 0, 1, -29.3087, 1.22862, -11.5117)
+use_collision = true
+size = Vector3(17.7816, 3.64517, 3.03436)
+
+[node name="8" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.3753, 0.724147, -2.09658)
+use_collision = true
+size = Vector3(5.3027, 3.6684, 3.03436)
+
+[node name="rrr" type="CSGBox3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.2709, 3.68393, -6.78039)
+use_collision = true
+size = Vector3(5.3027, 0.875305, 3.03436)
+material = SubResource("StandardMaterial3D_grx5o")
+script = ExtResource("2_sa5dh")
+
+[node name="Area3D" type="Area3D" parent="Node3D/rrr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0827293, 0)
