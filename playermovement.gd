@@ -1,8 +1,8 @@
 extends RigidBody3D
 
 const WALK_SPEED = 50.0
-const MAX_WALK_SPEED = 15.0
-const AIR_SPEED = 15.0
+const MAX_WALK_SPEED = 10.0
+const AIR_SPEED = 1.0
 const SPRINT_SPEED = 80.0
 const SENSITIVITY = 0.01
 const BOB_FREQ = 2.0
@@ -19,6 +19,7 @@ var front_collided = false
 var left_collided = false
 var right_collided = false
 var back_collided = false
+var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var coyote = $CoyoteTimer
@@ -34,7 +35,7 @@ func _ready() -> void:
 	self.set_contact_monitor(true)
 	self.set_max_contacts_reported(999)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	linear_damp = 1
+	linear_damp = 2
 	raycast.enabled = true
 	front.set_monitoring(true)
 	left.set_monitoring(true)
@@ -80,12 +81,15 @@ func _process(delta: float) -> void:
 	print(input)
 	is_on_floor = _touching_floor()
 	if Input.is_action_just_pressed("jump") and is_on_floor:
-		apply_central_impulse(Vector3(0.0,1.0,0.0)*JUMP_HEIGHT)
+		apply_central_impulse(Vector3(input.x,1.0*JUMP_HEIGHT,input.z))
 	elif abs(v) < MAX_WALK_SPEED:
 		if not is_on_floor:
-			pass
-			# apply_central_impulse(input*AIR_SPEED*delta)
+			linear_damp = 0.2
+			set_inertia(jump_vector)
+			set_gravity_scale(1.5)
+			apply_central_impulse(input*AIR_SPEED*delta)
 		else:
+			set_gravity_scale(1)
 			apply_central_impulse(input*WALK_SPEED*delta)
 	else: 
 		pass
