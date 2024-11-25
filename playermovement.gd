@@ -1,16 +1,18 @@
 extends RigidBody3D
 
-const WALK_SPEED = 50.0
-const MAX_WALK_SPEED = 10.0
-const AIR_SPEED = 1.0
+const CROUCH_SPEED = 1.0
+const WALK_SPEED = 75.0
+const MAX_WALK_SPEED = 15.0
+const AIR_SPEED = 10.0
 const SPRINT_SPEED = 80.0
-const SENSITIVITY = 0.01
+const SENSITIVITY = 0.004
 const BOB_FREQ = 2.0
 const BOB_AMP = 0.0
 const JUMP_HEIGHT = 7.0
 var t_bob = 0.0
 const BASE_FOV = 75.0
 const FOV_CHANGE = 1
+var friction = 0
 var was_on_floor 
 var direction = Vector3()
 var velocity = Vector3()
@@ -89,10 +91,29 @@ func _process(delta: float) -> void:
 			set_gravity_scale(1.5)
 			apply_central_impulse(input*AIR_SPEED*delta)
 		else:
-			set_gravity_scale(1)
+			if Input.is_action_just_pressed("crouch"):
+				apply_central_impulse(input*CROUCH_SPEED*delta)
+			else:
+				apply_central_impulse(input*WALK_SPEED*delta)			
+	else: 
+		pass
+	#crouching below
+	if Input.is_action_just_pressed("crouch"):
+		$"../AnimationPlayer".play("crouch")
+		print ("whar")
+	elif Input.is_action_just_released("crouch"):
+		$"../AnimationPlayer".play_backwards("crouch")
+  		set_gravity_scale(1)
 			apply_central_impulse(input*WALK_SPEED*delta)
 	else: 
 		pass
+func _on_rigid_body_3d_body_entered(body: Node) -> void:
+	$"../AnimationPlayer".pause("crouch")
+	print ("amongus")
+
+func _on_rigid_body_3d_body_exited(body: Node) -> void:
+	$"../AnimationPlayer".resume("crouch")
+	print ("sus")
 	
 
 
