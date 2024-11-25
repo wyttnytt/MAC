@@ -1,9 +1,9 @@
 extends RigidBody3D
 
-const CROUCH_SPEED = 1.0
-const WALK_SPEED = 75.0
-const MAX_WALK_SPEED = 15.0
-const AIR_SPEED = 10.0
+const CROUCH_SPEED = 20.0
+const WALK_SPEED = 50.0
+const MAX_WALK_SPEED = 10.0
+const AIR_SPEED = 1
 const SPRINT_SPEED = 80.0
 const SENSITIVITY = 0.004
 const BOB_FREQ = 2.0
@@ -13,6 +13,7 @@ var t_bob = 0.0
 const BASE_FOV = 75.0
 const FOV_CHANGE = 1
 var friction = 0
+var crouch = 0
 var was_on_floor 
 var direction = Vector3()
 var velocity = Vector3()
@@ -21,6 +22,7 @@ var front_collided = false
 var left_collided = false
 var right_collided = false
 var back_collided = false
+var is_roofed = false
 var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
@@ -32,6 +34,7 @@ var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 @onready var left = $Head/left
 @onready var right = $Head/right
 @onready var back = $Head/back
+@onready var upboy = $upboy
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.set_contact_monitor(true)
@@ -39,6 +42,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	linear_damp = 2
 	raycast.enabled = true
+	upboy.enabled = true
 	front.set_monitoring(true)
 	left.set_monitoring(true)
 	right.set_monitoring(true)
@@ -60,6 +64,14 @@ func _touching_floor() -> bool:
 		return true
 	return false
 
+func _uncrouch_collision() -> bool:
+	upboy.force_raycast_update()  # Update the raycast position
+	if upboy.is_colliding():
+		var collision_point = upboy.get_collision_point()
+		var collider = upboy.get_collider()
+		$"../AnimationPlayer".pause()
+		return true
+	return false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _touching_wall(vector) -> Vector3:
@@ -82,6 +94,7 @@ func _process(delta: float) -> void:
 	var v = sqrt(pow(linear_velocity.x,2)+pow(linear_velocity.y,2)+pow(linear_velocity.z,2))	
 	print(input)
 	is_on_floor = _touching_floor()
+	is_roofed = _uncrouch_collision()
 	if Input.is_action_just_pressed("jump") and is_on_floor:
 		apply_central_impulse(Vector3(input.x,1.0*JUMP_HEIGHT,input.z))
 	elif abs(v) < MAX_WALK_SPEED:
@@ -91,7 +104,7 @@ func _process(delta: float) -> void:
 			set_gravity_scale(1.5)
 			apply_central_impulse(input*AIR_SPEED*delta)
 		else:
-			if Input.is_action_just_pressed("crouch"):
+			if crouch:
 				apply_central_impulse(input*CROUCH_SPEED*delta)
 			else:
 				apply_central_impulse(input*WALK_SPEED*delta)			
@@ -99,22 +112,21 @@ func _process(delta: float) -> void:
 		pass
 	#crouching below
 	if Input.is_action_just_pressed("crouch"):
-		$"../AnimationPlayer".play("crouch")
-		print ("whar")
+		crouch = 1
 	elif Input.is_action_just_released("crouch"):
+		crouch = -1
+	elif crouch == 1: 
+		crouch = 0
+		$"../AnimationPlayer".play("crouch")
+		linear_damp = 3
+		linear_velocity = Vector3(0,0,0)
+	elif crouch == -1 and not is_roofed:
+		crouch = 0
 		$"../AnimationPlayer".play_backwards("crouch")
-  		set_gravity_scale(1)
-			apply_central_impulse(input*WALK_SPEED*delta)
-	else: 
-		pass
-func _on_rigid_body_3d_body_entered(body: Node) -> void:
-	$"../AnimationPlayer".pause("crouch")
-	print ("amongus")
-
-func _on_rigid_body_3d_body_exited(body: Node) -> void:
-	$"../AnimationPlayer".resume("crouch")
-	print ("sus")
+		set_gravity_scale(1)
+		linear_damp = 2
 	
+
 
 
 func _on_front_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
