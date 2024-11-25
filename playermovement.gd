@@ -23,6 +23,7 @@ var left_collided = false
 var right_collided = false
 var back_collided = false
 var is_roofed = false
+var thirdperson = false
 var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
@@ -35,6 +36,8 @@ var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 @onready var right = $Head/right
 @onready var back = $Head/back
 @onready var upboy = $upboy
+@onready var othercamera = $Head/pivot/FOVcamera
+@onready var pivot = $Head/pivot
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.set_contact_monitor(true)
@@ -50,10 +53,14 @@ func _ready() -> void:
 	
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
-		head.rotate_y(-event.relative.x * SENSITIVITY)
-		camera.rotate_x(-event.relative.y * SENSITIVITY)
-
-		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		if othercamera.current == true:
+			head.rotate_y(-event.relative.x * SENSITIVITY)
+			pivot.rotate_x(-event.relative.y * SENSITIVITY)
+			pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		else:
+			head.rotate_y(-event.relative.x * SENSITIVITY)
+			camera.rotate_x(-event.relative.y * SENSITIVITY)
+			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 		
 		
 func _touching_floor() -> bool:
@@ -69,7 +76,6 @@ func _uncrouch_collision() -> bool:
 	if upboy.is_colliding():
 		var collision_point = upboy.get_collision_point()
 		var collider = upboy.get_collider()
-		$"../AnimationPlayer".pause()
 		return true
 	return false
 	
@@ -92,7 +98,6 @@ func _process(delta: float) -> void:
 	input = _touching_wall(input)
 	input = (head.transform.basis * input).normalized()
 	var v = sqrt(pow(linear_velocity.x,2)+pow(linear_velocity.y,2)+pow(linear_velocity.z,2))	
-	print(input)
 	is_on_floor = _touching_floor()
 	is_roofed = _uncrouch_collision()
 	if Input.is_action_just_pressed("jump") and is_on_floor:
@@ -125,6 +130,14 @@ func _process(delta: float) -> void:
 		$"../AnimationPlayer".play_backwards("crouch")
 		set_gravity_scale(1)
 		linear_damp = 2
+	if Input.is_action_just_pressed("thirdperson"):
+		if not thirdperson:
+			print("asd")
+			thirdperson = true
+			othercamera.current = true
+		else:
+			thirdperson = false
+			camera.current = true
 	
 
 
