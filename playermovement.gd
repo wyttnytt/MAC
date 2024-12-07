@@ -100,7 +100,7 @@ func _touching_wall(vector) -> Vector3:
 func _process(delta: float) -> void:
 	label2.text = "Total absolute velocity= " + str(abs(linear_velocity.x)+abs(linear_velocity.z))
 	label3.text = "velocity x = " + str(linear_velocity.x)
-	label4.text = "velocity x = " + str(linear_velocity.z)
+	label4.text = "velocity z = " + str(linear_velocity.z)
 	var input:= Vector3.ZERO
 	input.x = Input.get_axis("left", "right")
 	input.z = Input.get_axis("forward", "back")	
