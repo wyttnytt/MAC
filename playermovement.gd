@@ -25,6 +25,8 @@ var back_collided = false
 var is_roofed = false
 var thirdperson = false
 var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
+var crouch_check = false
+var slide_check = false
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var coyote = $CoyoteTimer
@@ -38,6 +40,10 @@ var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 @onready var upboy = $upboy
 @onready var othercamera = $Head/pivot/FOVcamera
 @onready var pivot = $Head/pivot
+@onready var label = $"../crouch_status"
+@onready var label2 = $"../total_linear_velocity"
+@onready var label3 = $"../Linear_x"
+@onready var label4 = $"../Linear_v"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.set_contact_monitor(true)
@@ -92,6 +98,9 @@ func _touching_wall(vector) -> Vector3:
 	return vector
 
 func _process(delta: float) -> void:
+	label2.text = "Total absolute velocity= " + str(abs(linear_velocity.x)+abs(linear_velocity.z))
+	label3.text = "velocity x = " + str(linear_velocity.x)
+	label4.text = "velocity z = " + str(linear_velocity.z)
 	var input:= Vector3.ZERO
 	input.x = Input.get_axis("left", "right")
 	input.z = Input.get_axis("forward", "back")	
@@ -120,16 +129,30 @@ func _process(delta: float) -> void:
 		crouch = 1
 	elif Input.is_action_just_released("crouch"):
 		crouch = -1
-	elif crouch == 1: 
+	elif crouch == 1 and abs(linear_velocity.x)+abs(linear_velocity.z)<10 and not slide_check: 
 		crouch = 0
 		$"../AnimationPlayer".play("crouch")
+		label.text = "crouch down"
 		linear_damp = 3
 		linear_velocity = Vector3(0,0,0)
-	elif crouch == -1 and not is_roofed:
+		crouch_check = true
+	if crouch == -1 and not is_roofed and abs(linear_velocity.x)+abs(linear_velocity.z)<10 and not slide_check:
 		crouch = 0
 		$"../AnimationPlayer".play_backwards("crouch")
+		label.text = "crouch up"
 		set_gravity_scale(1)
 		linear_damp = 2
+		crouch_check = false
+	elif crouch == 1 and abs(linear_velocity.x)+abs(linear_velocity.z)>10 and not crouch_check: 
+		crouch = 0
+		slide_check = true
+		$"../AnimationPlayer".play("crouch")
+		label.text = "slide down"
+	elif crouch == -1 and not is_roofed and not crouch_check:
+		crouch = 0
+		slide_check = false
+		$"../AnimationPlayer".play_backwards("crouch")
+		label.text = "slide up"
 	if Input.is_action_just_pressed("thirdperson"):
 		if not thirdperson:
 			print("asd")
