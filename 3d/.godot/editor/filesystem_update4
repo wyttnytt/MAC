@@ -1,0 +1,6 @@
+res://scenes/game.tscn
+res://scenes/block.tscn
+res://scenes/player.tscn
+res://scripts/block.gd
+res://scripts/player.gd
+res://scenes/camera_3d.gd

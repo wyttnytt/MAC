@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://ben070qner75b"]
+
+[ext_resource type="PackedScene" uid="uid://dx3vyhcpql6wm" path="res://scenes/player.tscn" id="1_3mdcg"]
+[ext_resource type="PackedScene" uid="uid://c1y53gf8n1jeg" path="res://scenes/block.tscn" id="1_c4xms"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ri8g"]
+albedo_color = Color(0.254639, 0.989397, 0.0443782, 1)
+metallic_specular = 0.21
+roughness = 0.0
+refraction_scale = -0.19
+
+[sub_resource type="BoxMesh" id="BoxMesh_5owj2"]
+material = SubResource("StandardMaterial3D_4ri8g")
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c8w5j"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lrsp7"]
+sky_top_color = Color(0.511642, 0.0799281, 0.443792, 1)
+sky_horizon_color = Color(0.941824, 0.463372, 0.741209, 1)
+sky_curve = 0.113679
+sky_energy_multiplier = 1.95
+
+[sub_resource type="Sky" id="Sky_1f12m"]
+sky_material = SubResource("ProceduralSkyMaterial_lrsp7")
+
+[sub_resource type="Environment" id="Environment_cxvfd"]
+background_mode = 2
+sky = SubResource("Sky_1f12m")
+ambient_light_source = 2
+ambient_light_color = Color(0.732779, 0.306412, 0.835381, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4o1r4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d7ryi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_56tgh"]
+
+[node name="game" type="Node3D"]
+
+[node name="floor" type="StaticBody3D" parent="."]
+transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.15427, 0.0231159, 0, 0.0450714)
+mesh = SubResource("BoxMesh_5owj2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00270158, 0.0482977, -0.0979576)
+shape = SubResource("BoxShape3D_c8w5j")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.427042, 0.904232, 0, -0.904232, 0.427042, 0.955947, 6.93701, 0.377645)
+shadow_enabled = true
+
+[node name="player" parent="." instance=ExtResource("1_3mdcg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7506, 1.03659, 3.02601)
+
+[node name="blocks" type="Node3D" parent="."]
+
+[node name="block" parent="blocks" instance=ExtResource("1_c4xms")]
+transform = Transform3D(11.5455, 0, 0, 0, 1.97808, 0, 0, 0, 0.992717, 1.31938, 2.58874, -4.24136)
+
+[node name="block2" parent="blocks" instance=ExtResource("1_c4xms")]
+transform = Transform3D(1, 0, 0, 0, 0.48632, 0.873781, 0, -0.873781, 0.48632, 0, 4.17905, 0.779637)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cxvfd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.985874, 0, 0, 0, 1.76958, 0, 0, 0, 0.985874, 2.73763, 2.51358, -4.76837e-07)
+mesh = SubResource("CapsuleMesh_4o1r4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+physics_material_override = SubResource("PhysicsMaterial_d7ryi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("CapsuleShape3D_56tgh")
