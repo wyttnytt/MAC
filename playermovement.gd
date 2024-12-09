@@ -5,7 +5,8 @@ const WALK_SPEED = 50.0
 const MAX_WALK_SPEED = 10.0
 const AIR_SPEED = 1
 const SPRINT_SPEED = 80.0
-const SENSITIVITY = 0.004
+const MOUSE_SENSITIVITY = 0.004
+const CONTROLLER_SENSITIVITY = 0.03
 const BOB_FREQ = 2.0
 const BOB_AMP = 0.0
 const JUMP_HEIGHT = 7.0
@@ -27,46 +28,51 @@ var thirdperson = false
 var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 var crouch_check = false
 var slide_check = false
+var headmovement = Vector3()
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var coyote = $CoyoteTimer
 @onready var collision = $CollisionShape3D
 @onready var floor = $"../floor" 	
 @onready var raycast = $RayCast3D
-@onready var front = $Head/front
-@onready var left = $Head/left
-@onready var right = $Head/right
-@onready var back = $Head/back
 @onready var upboy = $upboy
 @onready var othercamera = $Head/pivot/FOVcamera
 @onready var pivot = $Head/pivot
-@onready var label = $"../crouch_status"
-@onready var label2 = $"../total_linear_velocity"
-@onready var label3 = $"../Linear_x"
-@onready var label4 = $"../Linear_v"
+@onready var label = $"../GUI/crouch_status"
+@onready var label2 = $"../GUI/total_linear_velocity"
+@onready var label3 = $"../GUI/Linear_x"
+@onready var label4 = $"../GUI/Linear_v"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.set_contact_monitor(true)
 	self.set_max_contacts_reported(999)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	linear_damp = 2
+	linear_damp = 5
 	raycast.enabled = true
 	upboy.enabled = true
-	front.set_monitoring(true)
-	left.set_monitoring(true)
-	right.set_monitoring(true)
-	back.set_monitoring(true)
 	
 func _unhandled_input(event):
-	if event is InputEventMouseMotion:
+	headmovement.y = Input.get_axis("headup","headdown")
+	headmovement.x = Input.get_axis("headleft","headright")
+	if headmovement != Vector3.ZERO:
 		if othercamera.current == true:
-			head.rotate_y(-event.relative.x * SENSITIVITY)
-			pivot.rotate_x(-event.relative.y * SENSITIVITY)
+			head.rotate_y(-headmovement.x * CONTROLLER_SENSITIVITY)
+			pivot.rotate_x(-headmovement.y * CONTROLLER_SENSITIVITY)
 			pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 		else:
-			head.rotate_y(-event.relative.x * SENSITIVITY)
-			camera.rotate_x(-event.relative.y * SENSITIVITY)
+			head.rotate_y(-headmovement.x * CONTROLLER_SENSITIVITY)
+			camera.rotate_x(-headmovement.y * CONTROLLER_SENSITIVITY)
 			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+	elif event is InputEventMouseMotion:
+		if othercamera.current == true:
+			head.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
+			pivot.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
+			pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		else:
+			head.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
+			camera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
+			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		
 		
 		
 func _touching_floor() -> bool:
@@ -86,16 +92,6 @@ func _uncrouch_collision() -> bool:
 	return false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _touching_wall(vector) -> Vector3:
-	if front_collided:
-		vector.z = clamp(vector.z,0,1)
-	if back_collided:
-		vector.z = clamp(vector.z,-1,0)
-	if left_collided:
-		vector.x = clamp(vector.x,0,1)
-	if right_collided:
-		vector.x = clamp(vector.x,-1,0)
-	return vector
 
 func _process(delta: float) -> void:
 	label2.text = "Total absolute velocity= " + str(abs(linear_velocity.x)+abs(linear_velocity.z))
@@ -104,7 +100,6 @@ func _process(delta: float) -> void:
 	var input:= Vector3.ZERO
 	input.x = Input.get_axis("left", "right")
 	input.z = Input.get_axis("forward", "back")	
-	input = _touching_wall(input)
 	input = (head.transform.basis * input).normalized()
 	var v = sqrt(pow(linear_velocity.x,2)+pow(linear_velocity.y,2)+pow(linear_velocity.z,2))	
 	is_on_floor = _touching_floor()
@@ -113,11 +108,12 @@ func _process(delta: float) -> void:
 		apply_central_impulse(Vector3(input.x,1.0*JUMP_HEIGHT,input.z))
 	elif abs(v) < MAX_WALK_SPEED:
 		if not is_on_floor:
-			linear_damp = 0.2
+			linear_damp = 0.5
 			set_inertia(jump_vector)
 			set_gravity_scale(1.5)
 			apply_central_impulse(input*AIR_SPEED*delta)
 		else:
+			linear_damp = 5
 			if crouch:
 				apply_central_impulse(input*CROUCH_SPEED*delta)
 			else:
@@ -133,7 +129,7 @@ func _process(delta: float) -> void:
 		crouch = 0
 		$"../AnimationPlayer".play("crouch")
 		label.text = "crouch down"
-		linear_damp = 3
+		linear_damp = 10
 		linear_velocity = Vector3(0,0,0)
 		crouch_check = true
 	if crouch == -1 and not is_roofed and abs(linear_velocity.x)+abs(linear_velocity.z)<10 and not slide_check:
@@ -141,7 +137,7 @@ func _process(delta: float) -> void:
 		$"../AnimationPlayer".play_backwards("crouch")
 		label.text = "crouch up"
 		set_gravity_scale(1)
-		linear_damp = 2
+		linear_damp = 5
 		crouch_check = false
 	elif crouch == 1 and abs(linear_velocity.x)+abs(linear_velocity.z)>10 and not crouch_check: 
 		crouch = 0
@@ -155,43 +151,9 @@ func _process(delta: float) -> void:
 		label.text = "slide up"
 	if Input.is_action_just_pressed("thirdperson"):
 		if not thirdperson:
-			print("asd")
 			thirdperson = true
 			othercamera.current = true
 		else:
 			thirdperson = false
 			camera.current = true
 	
-
-
-
-func _on_front_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	front_collided = true # Replace with function body.
-
-
-func _on_front_body_shape_exited(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	front_collided = false # Replace with function body.
-
-
-func _on_back_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	back_collided = true # Replace with function body.
-
-
-func _on_back_body_shape_exited(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	back_collided = false # Replace with function body.
-
-
-func _on_left_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	left_collided = true # Replace with function body.
-
-
-func _on_left_body_shape_exited(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	left_collided = false # Replace with function body.
-
-
-func _on_right_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	right_collided = true # Replace with function body.
-
-
-func _on_right_body_shape_exited(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
-	right_collided = false # Replace with function body.
