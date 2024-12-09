@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://cbvnws21jha45"]
+[gd_scene load_steps=20 format=3 uid="uid://cbvnws21jha45"]
 
 [ext_resource type="Script" path="res://6.gd" id="2_sa5dh"]
 [ext_resource type="Script" path="res://playermovement.gd" id="2_ye60e"]
 [ext_resource type="MeshLibrary" uid="uid://braa8y5xv3ybh" path="res://tiles.tres" id="3_86ybw"]
+[ext_resource type="Script" path="res://secondplayer.gd" id="4_kxm1u"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_diidr"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -29,26 +30,26 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 radius = 0.3
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nsb4f"]
+friction = 0.0
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0efni"]
 points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ragh3"]
-radius = 0.05
-
-[sub_resource type="SphereMesh" id="SphereMesh_trjsf"]
-radius = 0.2
-height = 0.4
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grx5o"]
 albedo_color = Color(0.928299, 0.448908, 0.52497, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7rjc3"]
+size = Vector3(3, 0.5, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bhbir"]
+size = Vector3(3, 0.5, 3)
 
 [sub_resource type="Animation" id="Animation_g6n0p"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RigidBody3D/MeshInstance3D:scale")
+tracks/0/path = NodePath("firstplayer/MeshInstance3D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -60,7 +61,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("RigidBody3D/MeshInstance3D:position")
+tracks/1/path = NodePath("firstplayer/MeshInstance3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -72,7 +73,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("RigidBody3D/CollisionShape3D:position")
+tracks/2/path = NodePath("firstplayer/CollisionShape3D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -84,7 +85,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("RigidBody3D/CollisionShape3D:scale")
+tracks/3/path = NodePath("firstplayer/CollisionShape3D:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -96,7 +97,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("RigidBody3D/Head:position")
+tracks/4/path = NodePath("firstplayer/Head:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -108,7 +109,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("RigidBody3D/Head:scale")
+tracks/5/path = NodePath("firstplayer/Head:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -136,7 +137,7 @@ length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RigidBody3D/MeshInstance3D:scale")
+tracks/0/path = NodePath("firstplayer/MeshInstance3D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -148,7 +149,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("RigidBody3D/MeshInstance3D:position")
+tracks/1/path = NodePath("firstplayer/MeshInstance3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -160,7 +161,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("RigidBody3D/CollisionShape3D:position")
+tracks/2/path = NodePath("firstplayer/CollisionShape3D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -172,7 +173,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("RigidBody3D/CollisionShape3D:scale")
+tracks/3/path = NodePath("firstplayer/CollisionShape3D:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -184,7 +185,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("RigidBody3D/Head:position")
+tracks/4/path = NodePath("firstplayer/Head:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -196,7 +197,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("RigidBody3D/Head:scale")
+tracks/5/path = NodePath("firstplayer/Head:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -224,13 +225,43 @@ _data = {
 "crouch": SubResource("Animation_0h2cp")
 }
 
-[sub_resource type="BoxMesh" id="BoxMesh_7rjc3"]
-size = Vector3(3, 0.5, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bhbir"]
-size = Vector3(3, 0.5, 3)
-
 [node name="World" type="Node3D"]
+
+[node name="splitscreen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="splitscreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 3.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="splitscreen/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SubViewport" type="SubViewport" parent="splitscreen/HBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="splitscreen/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SubViewport" type="SubViewport" parent="splitscreen/HBoxContainer/SubViewportContainer2"]
+handle_input_locally = false
+render_target_update_mode = 4
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -266,133 +297,79 @@ one_shot = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0346, 0)
 shape = SubResource("SphereShape3D_aogy2")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="firstplayer" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2508, 0.470425, -0.00660539)
 collision_layer = 2
 physics_material_override = SubResource("PhysicsMaterial_nsb4f")
 lock_rotation = true
 script = ExtResource("2_ye60e")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="firstplayer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 mesh = SubResource("CapsuleMesh_g1hl1")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstplayer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30042, 0)
 shape = SubResource("ConvexPolygonShape3D_0efni")
 
-[node name="Head" type="Node3D" parent="RigidBody3D"]
+[node name="Head" type="Node3D" parent="firstplayer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77355, 0)
 
-[node name="Camera3D" type="Camera3D" parent="RigidBody3D/Head"]
+[node name="Camera3D" type="Camera3D" parent="firstplayer/Head"]
 
-[node name="back" type="Area3D" parent="RigidBody3D/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.500042, 0, 0.923063)
+[node name="pivot" type="Node3D" parent="firstplayer/Head"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/Head/back"]
-transform = Transform3D(-0.0725071, 0, 0.997368, 0, 1, 0, -0.997368, 0, -0.0725071, -0.476242, -0.36557, -0.600868)
-shape = SubResource("SphereShape3D_ragh3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/Head/back/CollisionShape3D"]
-visible = false
-mesh = SubResource("SphereMesh_trjsf")
-
-[node name="front" type="Area3D" parent="RigidBody3D/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302763, 0, 0.691106)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/Head/front"]
-transform = Transform3D(-0.0725071, 0, 0.997368, 0, 1, 0, -0.997368, 0, -0.0725071, -0.289471, -0.36557, -1.01651)
-shape = SubResource("SphereShape3D_ragh3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/Head/front/CollisionShape3D"]
-visible = false
-mesh = SubResource("SphereMesh_trjsf")
-
-[node name="left" type="Area3D" parent="RigidBody3D/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0395918, 0, 1.01427)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/Head/left"]
-transform = Transform3D(-0.0725071, 0, 0.997368, 0, 1, 0, -0.997368, 0, -0.0725071, -0.289471, -0.36557, -1.01651)
-shape = SubResource("SphereShape3D_ragh3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/Head/left/CollisionShape3D"]
-visible = false
-mesh = SubResource("SphereMesh_trjsf")
-
-[node name="right" type="Area3D" parent="RigidBody3D/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.623179, 0, 1.0124)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/Head/right"]
-transform = Transform3D(-0.0725071, 0, 0.997368, 0, 1, 0, -0.997368, 0, -0.0725071, -0.289471, -0.36557, -1.01651)
-shape = SubResource("SphereShape3D_ragh3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/Head/right/CollisionShape3D"]
-visible = false
-mesh = SubResource("SphereMesh_trjsf")
-
-[node name="pivot" type="Node3D" parent="RigidBody3D/Head"]
-
-[node name="FOVcamera" type="Camera3D" parent="RigidBody3D/Head/pivot"]
+[node name="FOVcamera" type="Camera3D" parent="firstplayer/Head/pivot"]
 transform = Transform3D(1, 0, 0, 0, 0.968583, 0.24869, 0, -0.24869, 0.968583, 0, 1, 2)
 fov = 79.1557
 
-[node name="CoyoteTimer" type="Timer" parent="RigidBody3D"]
+[node name="CoyoteTimer" type="Timer" parent="firstplayer"]
 wait_time = 0.15
 one_shot = true
 
-[node name="RayCast3D" type="RayCast3D" parent="RigidBody3D"]
+[node name="RayCast3D" type="RayCast3D" parent="firstplayer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.889945, -0.0274236)
 
-[node name="upboy" type="RayCast3D" parent="RigidBody3D"]
+[node name="upboy" type="RayCast3D" parent="firstplayer"]
 transform = Transform3D(-0.999999, 0.00116938, 0, -0.00116938, -0.999999, 0, 0, 0, 1, -0.0438805, 1.42183, 0.00504364)
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="blocks" type="Node3D" parent="."]
 
-[node name="2" type="CSGBox3D" parent="Node3D"]
+[node name="2" type="CSGBox3D" parent="blocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.1139, 2.28109, -7.08862)
 use_collision = true
 size = Vector3(3.58864, 6.75793, 30.4995)
 
-[node name="4" type="CSGBox3D" parent="Node3D"]
+[node name="4" type="CSGBox3D" parent="blocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.174, 2.14577, -7.0194)
 use_collision = true
 size = Vector3(3.58864, 6.75793, 30.4995)
 
-[node name="5" type="CSGBox3D" parent="Node3D"]
+[node name="5" type="CSGBox3D" parent="blocks"]
 transform = Transform3D(-0.0444215, 0, 0.999013, 0, 1, 0, -0.999013, 0, -0.0444215, -27.5135, 2.21398, -17.9387)
 use_collision = true
 size = Vector3(3.58864, 6.75793, 68.1716)
 
-[node name="7" type="CSGBox3D" parent="Node3D"]
+[node name="7" type="CSGBox3D" parent="blocks"]
 transform = Transform3D(-0.932689, 0.360681, 0, -0.360681, -0.932689, 0, 0, 0, 1, -29.3087, 1.22862, -11.5117)
 use_collision = true
 size = Vector3(17.7816, 3.64517, 3.03436)
 
-[node name="8" type="CSGBox3D" parent="Node3D"]
+[node name="8" type="CSGBox3D" parent="blocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.3753, 0.724147, -2.09658)
 use_collision = true
 size = Vector3(5.3027, 3.6684, 3.03436)
 
-[node name="rrr" type="CSGBox3D" parent="Node3D"]
+[node name="rrr" type="CSGBox3D" parent="blocks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.2709, 3.68393, -6.78039)
 use_collision = true
 size = Vector3(5.3027, 0.875305, 3.03436)
 material = SubResource("StandardMaterial3D_grx5o")
 script = ExtResource("2_sa5dh")
 
-[node name="Area3D" type="Area3D" parent="Node3D/rrr"]
+[node name="Area3D" type="Area3D" parent="blocks/rrr"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0827293, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_bk5mk")
-}
-
-[node name="crouch_status" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "crouch status:"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.301375, 0)
@@ -405,34 +382,46 @@ mesh = SubResource("BoxMesh_7rjc3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.74544, 2.12128, 0.152058)
 shape = SubResource("BoxShape3D_bhbir")
 
-[node name="total_linear_velocity" type="Label" parent="."]
-offset_left = 2.0
-offset_top = 25.0
-offset_right = 42.0
-offset_bottom = 48.0
-text = "velocity"
-
-[node name="Linear_x" type="Label" parent="."]
-offset_left = 2.0
-offset_top = 50.0
-offset_right = 42.0
-offset_bottom = 73.0
-text = "Velocity x"
-
-[node name="Linear_v" type="Label" parent="."]
-offset_left = 2.0
-offset_top = 75.0
-offset_right = 42.0
-offset_bottom = 98.0
-rotation = 0.00455638
-text = "velocity z"
-
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("3_86ybw")
 data = {
 "cells": PackedInt32Array(-65534, 2, 2, -65535, 2, 2, -65536, 2, 2, -1, 2, 2, -2, 2, 2, -28, 2, 2, -27, 2, 2, -26, 2, 2, -25, 2, 2, -24, 2, 2, -23, 2, 2, -22, 2, 2, -21, 2, 2, -20, 2, 2, -19, 2, 2, -18, 2, 2, -17, 2, 2, -16, 2, 2, -15, 2, 2, -14, 2, 2, -13, 2, 2, -12, 2, 2, -11, 2, 2, -10, 2, 2, -9, 2, 2, -8, 2, 2, -7, 2, 2, -6, 2, 2, -5, 2, 2, -4, 2, 2, -3, 2, 2, -65533, 3, 1, -65534, 3, 1, -65535, 3, 1, -65536, 3, 1, -1, 3, 1, -2, 3, 1, -3, 3, 1, -4, 3, 1, -5, 3, 1, -6, 3, 1, -7, 3, 1, -8, 3, 1, -9, 3, 1, -10, 3, 1, -11, 3, 1, -12, 3, 1, -13, 3, 1, -14, 3, 1, -15, 3, 1, -16, 3, 1, -17, 3, 1, -18, 3, 1, -19, 3, 1, -20, 3, 1, -21, 3, 1, -22, 3, 1, -23, 3, 1, -24, 3, 1, -25, 3, 1, -26, 3, 1, -27, 3, 1, -28, 3, 1, 65515, 4, 1441792, 65516, 4, 1441792, 65517, 4, 1441792, 65518, 4, 1441792, 65519, 4, 1441792, 65521, 4, 1441792, 65522, 4, 1441792, 65523, 4, 1441792, 65520, 4, 1441792, 65524, 4, 1441792, 65525, 4, 1441792, 65526, 4, 1441792, 65527, 4, 1441792, 65528, 4, 1441792, 65529, 4, 1441792, 65530, 4, 1441792, 65531, 4, 1441792, 65532, 4, 1441792, 65533, 4, 1441792, 65534, 4, 1441792, 65535, 4, 1441792, 0, 4, 1441792, 1, 4, 1441792, 2, 4, 1441792, 131045, 5, 1441792, 131046, 5, 1441792, 131047, 5, 1441792, 131048, 5, 1441792, 131049, 5, 1441792, 131050, 5, 1441792, 131051, 5, 1441792, 131052, 5, 1441792, 131053, 5, 1441792, 131054, 5, 1441792, 131059, 5, 1441792, 131060, 5, 1441792, 131061, 5, 1441792, 131062, 5, 1441792, 131063, 5, 1441792, 131064, 5, 1441792, 131065, 5, 1441792, 131066, 5, 1441792, 131067, 5, 1441792, 131068, 5, 1441792, 131069, 5, 1441792, 131070, 5, 1441792, 131071, 5, 1441792, 65536, 5, 1441792, 65537, 5, 1441792, 65538, 5, 1441792, 2, 5, 1441793, 1, 5, 1441793, 0, 5, 1441793, 65535, 5, 1441793, 65534, 5, 1441793, 65533, 5, 1441793, 65532, 5, 1441793, 65531, 5, 1441793, 65530, 5, 1441793, 65529, 5, 1441793, 65528, 5, 1441793, 65527, 5, 1441793, 65526, 5, 1441793, 65525, 5, 1441793, 65524, 5, 1441793, 65523, 5, 1441793, 65522, 5, 1441793, 65521, 5, 1441793, 65520, 5, 1441793, 65519, 5, 1441793, 65518, 5, 1441793, 65517, 5, 1441793, 65516, 5, 1441793, 65509, 5, 1441793, 65510, 5, 1441793, 65511, 5, 1441793, 65512, 5, 1441793, 65515, 5, 1441793, 65514, 5, 1310721, 65513, 5, 1310721, 65514, 4, 1441792, 65513, 4, 1441792, 65512, 4, 1441792, 65511, 4, 1441792, 65510, 4, 1441792, 65509, 4, 1441792, 131058, 21, 2, 131059, 21, 2, 131060, 21, 2, 131061, 21, 2, 131062, 21, 2, 131063, 21, 2, 131064, 21, 2, 131065, 21, 2, 131066, 21, 2, 131067, 21, 2, 131068, 21, 2, 131069, 21, 2, 131070, 21, 2, 131071, 21, 2, 65536, 21, 2, 65537, 21, 2, 65538, 6, 2, 65538, 7, 2, 65538, 8, 2, 65538, 9, 2, 65538, 10, 2, 65538, 11, 2, 65538, 12, 2, 65538, 13, 2, 65538, 14, 2, 65538, 15, 2, 65538, 16, 2, 65538, 17, 2, 65538, 18, 2, 65538, 19, 2, 65538, 20, 2, 65538, 21, 2, 131074, 7, 0, 131074, 8, 0, 131074, 9, 0, 131074, 10, 0, 131074, 11, 0, 131074, 12, 0, 131074, 13, 0, 131074, 14, 0, 131074, 15, 0, 131074, 16, 0, 131074, 17, 0, 131074, 18, 0, 131074, 19, 0, 131074, 20, 0, 131074, 21, 1, 131073, 21, 1441792, 131072, 21, 1441792, 196607, 21, 1441792, 196606, 21, 1441792, 196605, 21, 1441792, 196604, 21, 1441792, 196603, 21, 1441792, 196602, 21, 1441792, 196601, 21, 1441792, 196600, 21, 1441792, 196599, 21, 1441792, 196598, 21, 1441792, 196597, 21, 1441792, 196596, 21, 1441792, 196595, 21, 1441792, 196594, 21, 1441792, 196593, 21, 1441792, 196592, 21, 1441792, 196591, 21, 1441792, 196590, 21, 1441792, 196589, 21, 1441792, 196588, 21, 1441792, 196587, 21, 1441792, 196586, 21, 1441792, 196585, 21, 1441792, 196584, 21, 1441792, 196583, 21, 1441792, 196582, 21, 1441792, 196581, 7, 655360, 196581, 8, 655360, 196581, 9, 655360, 196581, 10, 655360, 196581, 11, 655360, 196581, 12, 655360, 196581, 13, 655360, 196581, 14, 655360, 196581, 15, 655360, 196581, 16, 655360, 196581, 17, 655360, 196581, 18, 655360, 196581, 19, 655360, 196581, 20, 655360, 196581, 21, 655361, 262117, 21, 1245185, 196610, 21, 1245185, 131074, 6, 1048577, 196610, 6, 1, 196581, 6, 131073, 262117, 6, 65537, 131055, 5, 1441792, 131056, 5, 1441792, 131057, 5, 1441792, 131058, 5, 1441792, 131046, 6, 65537, 131046, 7, 65537, 131046, 8, 65537, 131046, 9, 65537, 131046, 10, 65537, 131046, 11, 65537, 131046, 12, 65537, 131046, 13, 65537, 131046, 14, 65537, 131046, 15, 65537, 131046, 16, 65537, 131046, 17, 65537, 131046, 18, 65537, 131046, 19, 65537, 131046, 20, 65537, 131047, 6, 65537, 131047, 7, 65537, 131047, 8, 65537, 131047, 9, 65537, 131047, 10, 65537, 131047, 11, 65537, 131047, 12, 65537, 131047, 13, 65537, 131047, 14, 65537, 131047, 15, 65537, 131047, 16, 65537, 131047, 17, 65537, 131047, 18, 65537, 131047, 19, 65537, 131047, 20, 65537, 131048, 6, 65537, 131048, 7, 65537, 131048, 8, 65537, 131048, 9, 65537, 131048, 10, 65537, 131048, 11, 65537, 131048, 12, 65537, 131048, 13, 65537, 131048, 14, 65537, 131048, 15, 65537, 131048, 16, 65537, 131048, 17, 65537, 131048, 18, 65537, 131048, 19, 65537, 131048, 20, 65537, 131049, 6, 65537, 131049, 7, 65537, 131049, 8, 65537, 131049, 9, 65537, 131049, 10, 65537, 131049, 11, 65537, 131049, 12, 65537, 131049, 13, 65537, 131049, 14, 65537, 131049, 15, 65537, 131049, 16, 65537, 131049, 17, 65537, 131049, 18, 65537, 131049, 19, 65537, 131049, 20, 65537, 131050, 6, 65537, 131050, 7, 65537, 131050, 8, 65537, 131050, 9, 65537, 131050, 10, 65537, 131050, 11, 65537, 131050, 12, 65537, 131050, 13, 65537, 131050, 14, 65537, 131050, 15, 65537, 131050, 16, 65537, 131050, 17, 65537, 131050, 18, 65537, 131050, 19, 65537, 131050, 20, 65537, 131051, 6, 65537, 131051, 7, 65537, 131051, 8, 65537, 131051, 9, 65537, 131051, 10, 65537, 131051, 11, 65537, 131051, 12, 65537, 131051, 13, 65537, 131051, 14, 65537, 131051, 15, 65537, 131051, 16, 65537, 131051, 17, 65537, 131051, 18, 65537, 131051, 19, 65537, 131051, 20, 65537, 131052, 6, 65537, 131052, 7, 65537, 131052, 8, 65537, 131052, 9, 65537, 131052, 10, 65537, 131052, 11, 65537, 131052, 12, 65537, 131052, 13, 65537, 131052, 14, 65537, 131052, 15, 65537, 131052, 16, 65537, 131052, 17, 65537, 131052, 18, 65537, 131052, 19, 65537, 131052, 20, 65537, 131053, 6, 65537, 131053, 7, 65537, 131053, 8, 65537, 131053, 9, 65537, 131053, 10, 65537, 131053, 11, 65537, 131053, 12, 65537, 131053, 13, 65537, 131053, 14, 65537, 131053, 15, 65537, 131053, 16, 65537, 131053, 17, 65537, 131053, 18, 65537, 131053, 19, 65537, 131053, 20, 65537, 131054, 6, 65537, 131054, 7, 65537, 131054, 8, 65537, 131054, 9, 65537, 131054, 10, 65537, 131054, 11, 65537, 131054, 12, 65537, 131054, 13, 65537, 131054, 14, 65537, 131054, 15, 65537, 131054, 16, 65537, 131054, 17, 65537, 131054, 18, 65537, 131054, 19, 65537, 131054, 20, 65537, 131055, 6, 65537, 131055, 7, 65537, 131055, 8, 65537, 131055, 9, 65537, 131055, 10, 65537, 131055, 11, 65537, 131055, 12, 65537, 131055, 13, 65537, 131055, 14, 65537, 131055, 15, 65537, 131055, 16, 65537, 131055, 17, 65537, 131055, 18, 65537, 131055, 19, 65537, 131055, 20, 65537, 131056, 6, 65537, 131056, 7, 65537, 131056, 8, 65537, 131056, 9, 65537, 131056, 10, 65537, 131056, 11, 65537, 131056, 12, 65537, 131056, 13, 65537, 131056, 14, 65537, 131056, 15, 65537, 131056, 16, 65537, 131056, 17, 65537, 131056, 18, 65537, 131056, 19, 65537, 131056, 20, 65537, 131057, 6, 65537, 131057, 7, 65537, 131057, 8, 65537, 131057, 9, 65537, 131057, 10, 65537, 131057, 11, 65537, 131057, 12, 65537, 131057, 13, 65537, 131057, 14, 65537, 131057, 15, 65537, 131057, 16, 65537, 131057, 17, 65537, 131057, 18, 65537, 131057, 19, 65537, 131057, 20, 65537, 131058, 6, 65537, 131058, 7, 65537, 131058, 8, 65537, 131058, 9, 65537, 131058, 10, 65537, 131058, 11, 65537, 131058, 12, 65537, 131058, 13, 65537, 131058, 14, 65537, 131058, 15, 65537, 131058, 16, 65537, 131058, 17, 65537, 131058, 18, 65537, 131058, 19, 65537, 131058, 20, 65537, 131059, 6, 65537, 131059, 7, 65537, 131059, 8, 65537, 131059, 9, 65537, 131059, 10, 65537, 131059, 11, 65537, 131059, 12, 65537, 131059, 13, 65537, 131059, 14, 65537, 131059, 15, 65537, 131059, 16, 65537, 131059, 17, 65537, 131059, 18, 65537, 131059, 19, 65537, 131059, 20, 65537, 131060, 6, 65537, 131060, 7, 65537, 131060, 8, 65537, 131060, 9, 65537, 131060, 10, 65537, 131060, 11, 65537, 131060, 12, 65537, 131060, 13, 65537, 131060, 14, 65537, 131060, 15, 65537, 131060, 16, 65537, 131060, 17, 65537, 131060, 18, 65537, 131060, 19, 65537, 131060, 20, 65537, 131061, 6, 65537, 131061, 7, 65537, 131061, 8, 65537, 131061, 9, 65537, 131061, 10, 65537, 131061, 11, 65537, 131061, 12, 65537, 131061, 13, 65537, 131061, 14, 65537, 131061, 15, 65537, 131061, 16, 65537, 131061, 17, 65537, 131061, 18, 65537, 131061, 19, 65537, 131061, 20, 65537, 131062, 6, 65537, 131062, 7, 65537, 131062, 8, 65537, 131062, 9, 65537, 131062, 10, 65537, 131062, 11, 65537, 131062, 12, 65537, 131062, 13, 65537, 131062, 14, 65537, 131062, 15, 65537, 131062, 16, 65537, 131062, 17, 65537, 131062, 18, 65537, 131062, 19, 65537, 131062, 20, 65537, 131063, 6, 65537, 131063, 7, 65537, 131063, 8, 65537, 131063, 9, 65537, 131063, 10, 65537, 131063, 11, 65537, 131063, 12, 65537, 131063, 13, 65537, 131063, 14, 65537, 131063, 15, 65537, 131063, 16, 65537, 131063, 17, 65537, 131063, 18, 65537, 131063, 19, 65537, 131063, 20, 65537, 131064, 6, 65537, 131064, 7, 65537, 131064, 8, 65537, 131064, 9, 65537, 131064, 10, 65537, 131064, 11, 65537, 131064, 12, 65537, 131064, 13, 65537, 131064, 14, 65537, 131064, 15, 65537, 131064, 16, 65537, 131064, 17, 65537, 131064, 18, 65537, 131064, 19, 65537, 131064, 20, 65537, 131065, 6, 65537, 131065, 7, 65537, 131065, 8, 65537, 131065, 9, 65537, 131065, 10, 65537, 131065, 11, 65537, 131065, 12, 65537, 131065, 13, 65537, 131065, 14, 65537, 131065, 15, 65537, 131065, 16, 65537, 131065, 17, 65537, 131065, 18, 65537, 131065, 19, 65537, 131065, 20, 65537, 131066, 6, 65537, 131066, 7, 65537, 131066, 8, 65537, 131066, 9, 65537, 131066, 10, 65537, 131066, 11, 65537, 131066, 12, 65537, 131066, 13, 65537, 131066, 14, 65537, 131066, 15, 65537, 131066, 16, 65537, 131066, 17, 65537, 131066, 18, 65537, 131066, 19, 65537, 131066, 20, 65537, 131067, 6, 65537, 131067, 7, 65537, 131067, 8, 65537, 131067, 9, 65537, 131067, 10, 65537, 131067, 11, 65537, 131067, 12, 65537, 131067, 13, 65537, 131067, 14, 65537, 131067, 15, 65537, 131067, 16, 65537, 131067, 17, 65537, 131067, 18, 65537, 131067, 19, 65537, 131067, 20, 65537, 131068, 6, 65537, 131068, 7, 65537, 131068, 8, 65537, 131068, 9, 65537, 131068, 10, 65537, 131068, 11, 65537, 131068, 12, 65537, 131068, 13, 65537, 131068, 14, 65537, 131068, 15, 65537, 131068, 16, 65537, 131068, 17, 65537, 131068, 18, 65537, 131068, 19, 65537, 131068, 20, 65537, 131069, 6, 65537, 131069, 7, 65537, 131069, 8, 65537, 131069, 9, 65537, 131069, 10, 65537, 131069, 11, 65537, 131069, 12, 65537, 131069, 13, 65537, 131069, 14, 65537, 131069, 15, 65537, 131069, 16, 65537, 131069, 17, 65537, 131069, 18, 65537, 131069, 19, 65537, 131069, 20, 65537, 131070, 6, 65537, 131070, 7, 65537, 131070, 8, 65537, 131070, 9, 65537, 131070, 10, 65537, 131070, 11, 65537, 131070, 12, 65537, 131070, 13, 65537, 131070, 14, 65537, 131070, 15, 65537, 131070, 16, 65537, 131070, 17, 65537, 131070, 18, 65537, 131070, 19, 65537, 131070, 20, 65537, 131071, 6, 65537, 131071, 7, 65537, 131071, 8, 65537, 131071, 9, 65537, 131071, 10, 65537, 131071, 11, 65537, 131071, 12, 65537, 131071, 13, 65537, 131071, 14, 65537, 131071, 15, 65537, 131071, 16, 65537, 131071, 17, 65537, 131071, 18, 65537, 131071, 19, 65537, 131071, 20, 65537, 65536, 6, 65537, 65536, 7, 65537, 65536, 8, 65537, 65536, 9, 65537, 65536, 10, 65537, 65536, 11, 65537, 65536, 12, 65537, 65536, 13, 65537, 65536, 14, 65537, 65536, 15, 65537, 65536, 16, 65537, 65536, 17, 65537, 65536, 18, 65537, 65536, 19, 65537, 65536, 20, 65537, 65537, 6, 65537, 65537, 7, 65537, 65537, 8, 65537, 65537, 9, 65537, 65537, 10, 65537, 65537, 11, 65537, 65537, 12, 65537, 65537, 13, 65537, 65537, 14, 65537, 65537, 15, 65537, 65537, 16, 65537, 65537, 17, 65537, 65537, 18, 65537, 65537, 19, 65537, 65537, 20, 65537)
 }
 metadata/_editor_floor_ = Vector3(0, 4, 0)
+
+[node name="GUI" type="Node" parent="."]
+
+[node name="total_linear_velocity" type="Label" parent="GUI"]
+offset_left = 2.0
+offset_top = 25.0
+offset_right = 62.0
+offset_bottom = 48.0
+text = "velocity"
+
+[node name="Linear_x" type="Label" parent="GUI"]
+offset_left = 2.0
+offset_top = 50.0
+offset_right = 76.0
+offset_bottom = 73.0
+text = "Velocity x"
+
+[node name="Linear_v" type="Label" parent="GUI"]
+offset_left = 2.0
+offset_top = 75.0
+offset_right = 74.0
+offset_bottom = 98.0
+rotation = 0.00455638
+text = "velocity z"
+
+[node name="crouch_status" type="Label" parent="GUI"]
+offset_right = 110.0
+offset_bottom = 23.0
+text = "crouch status:"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bk5mk")
+}
 
 [node name="central_force_z" type="Label" parent="."]
 offset_left = 2.0
@@ -448,13 +437,42 @@ offset_right = 101.0
 offset_bottom = 151.0
 text = "central force x"
 
-[connection signal="body_entered" from="CharacterBody3D/RigidBody3D" to="RigidBody3D" method="_on_rigid_body_3d_body_entered"]
-[connection signal="body_exited" from="CharacterBody3D/RigidBody3D" to="RigidBody3D" method="_on_rigid_body_3d_body_exited"]
-[connection signal="body_shape_entered" from="RigidBody3D/Head/back" to="RigidBody3D" method="_on_back_body_shape_entered"]
-[connection signal="body_shape_exited" from="RigidBody3D/Head/back" to="RigidBody3D" method="_on_back_body_shape_exited"]
-[connection signal="body_shape_entered" from="RigidBody3D/Head/front" to="RigidBody3D" method="_on_front_body_shape_entered"]
-[connection signal="body_shape_exited" from="RigidBody3D/Head/front" to="RigidBody3D" method="_on_front_body_shape_exited"]
-[connection signal="body_shape_entered" from="RigidBody3D/Head/left" to="RigidBody3D" method="_on_left_body_shape_entered"]
-[connection signal="body_shape_exited" from="RigidBody3D/Head/left" to="RigidBody3D" method="_on_left_body_shape_exited"]
-[connection signal="body_shape_entered" from="RigidBody3D/Head/right" to="RigidBody3D" method="_on_right_body_shape_entered"]
-[connection signal="body_shape_exited" from="RigidBody3D/Head/right" to="RigidBody3D" method="_on_right_body_shape_exited"]
+[node name="secondplayer" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66588, 0.470425, -0.00660539)
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_nsb4f")
+lock_rotation = true
+script = ExtResource("4_kxm1u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="secondplayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+mesh = SubResource("CapsuleMesh_g1hl1")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondplayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30042, 0)
+shape = SubResource("ConvexPolygonShape3D_0efni")
+
+[node name="Head" type="Node3D" parent="secondplayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77355, 0)
+
+[node name="Camera3D2" type="Camera3D" parent="secondplayer/Head"]
+
+[node name="pivot" type="Node3D" parent="secondplayer/Head"]
+
+[node name="FOVcamera2" type="Camera3D" parent="secondplayer/Head/pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.968583, 0.24869, 0, -0.24869, 0.968583, 0, 1, 2)
+fov = 79.1557
+
+[node name="CoyoteTimer" type="Timer" parent="secondplayer"]
+wait_time = 0.15
+one_shot = true
+
+[node name="RayCast3D" type="RayCast3D" parent="secondplayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.889945, -0.0274236)
+
+[node name="upboy" type="RayCast3D" parent="secondplayer"]
+transform = Transform3D(-0.999999, 0.00116938, 0, -0.00116938, -0.999999, 0, 0, 0, 1, -0.0438805, 1.42183, 0.00504364)
+
+[connection signal="body_entered" from="CharacterBody3D/RigidBody3D" to="firstplayer" method="_on_rigid_body_3d_body_entered"]
+[connection signal="body_exited" from="CharacterBody3D/RigidBody3D" to="firstplayer" method="_on_rigid_body_3d_body_exited"]
