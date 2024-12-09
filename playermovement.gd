@@ -27,6 +27,12 @@ var thirdperson = false
 var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 var crouch_check = false
 var slide_check = false
+var fixed_direction = 0
+var lock_direction = false
+var test1 = 0
+var test2 = 0
+var test3 = Vector3.ZERO
+var last_input = Vector3.ZERO
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var coyote = $CoyoteTimer
@@ -44,6 +50,8 @@ var slide_check = false
 @onready var label2 = $"../total_linear_velocity"
 @onready var label3 = $"../Linear_x"
 @onready var label4 = $"../Linear_v"
+@onready var central_force_label_z := $"../central_force_z"
+@onready var central_force_label_x := $"../central_force_x"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.set_contact_monitor(true)
@@ -88,13 +96,13 @@ func _uncrouch_collision() -> bool:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _touching_wall(vector) -> Vector3:
 	if front_collided:
-		vector.z = clamp(vector.z,0,1)
+		vector.z = clamp(vector.z,-0.5,1)
 	if back_collided:
-		vector.z = clamp(vector.z,-1,0)
+		vector.z = clamp(vector.z,-1,0.5)
 	if left_collided:
-		vector.x = clamp(vector.x,0,1)
+		vector.x = clamp(vector.x,-0.5,1)
 	if right_collided:
-		vector.x = clamp(vector.x,-1,0)
+		vector.x = clamp(vector.x,-1,0.5)
 	return vector
 
 func _process(delta: float) -> void:
@@ -102,10 +110,27 @@ func _process(delta: float) -> void:
 	label3.text = "velocity x = " + str(linear_velocity.x)
 	label4.text = "velocity z = " + str(linear_velocity.z)
 	var input:= Vector3.ZERO
-	input.x = Input.get_axis("left", "right")
-	input.z = Input.get_axis("forward", "back")	
+	if not slide_check:
+		input.x = Input.get_axis("left", "right")
+		input.z = Input.get_axis("forward", "back")
+		test1 = input.x
+		test2 = input.z
+		test3 = input
+		linear_damp = 2
+		
 	input = _touching_wall(input)
-	input = (head.transform.basis * input).normalized()
+	if slide_check:
+		linear_damp = 0.1
+		if not lock_direction:
+			last_input = input
+			fixed_direction = head.transform.basis
+			#print((fixed_direction * Vector3(10, 0, 10)).normalized())
+			apply_central_impulse(last_input * Vector3(10, 0, 10))
+		input = (fixed_direction * input).normalized()
+		lock_direction = true
+	else:
+		lock_direction = false
+		input = (head.transform.basis * input).normalized()
 	var v = sqrt(pow(linear_velocity.x,2)+pow(linear_velocity.y,2)+pow(linear_velocity.z,2))	
 	is_on_floor = _touching_floor()
 	is_roofed = _uncrouch_collision()
@@ -113,7 +138,8 @@ func _process(delta: float) -> void:
 		apply_central_impulse(Vector3(input.x,1.0*JUMP_HEIGHT,input.z))
 	elif abs(v) < MAX_WALK_SPEED:
 		if not is_on_floor:
-			linear_damp = 0.2
+			if crouch == -1:
+				linear_damp = 0.2
 			set_inertia(jump_vector)
 			set_gravity_scale(1.5)
 			apply_central_impulse(input*AIR_SPEED*delta)
@@ -121,7 +147,7 @@ func _process(delta: float) -> void:
 			if crouch:
 				apply_central_impulse(input*CROUCH_SPEED*delta)
 			else:
-				apply_central_impulse(input*WALK_SPEED*delta)			
+				apply_central_impulse(input*WALK_SPEED*delta)
 	else: 
 		pass
 	#crouching below
@@ -133,7 +159,7 @@ func _process(delta: float) -> void:
 		crouch = 0
 		$"../AnimationPlayer".play("crouch")
 		label.text = "crouch down"
-		linear_damp = 3
+		linear_damp = 8
 		linear_velocity = Vector3(0,0,0)
 		crouch_check = true
 	if crouch == -1 and not is_roofed and abs(linear_velocity.x)+abs(linear_velocity.z)<10 and not slide_check:
@@ -161,7 +187,8 @@ func _process(delta: float) -> void:
 		else:
 			thirdperson = false
 			camera.current = true
-	
+	central_force_label_x.text = str(head.transform.basis.x)
+	central_force_label_z.text = str(head.transform.basis.z)
 
 
 
