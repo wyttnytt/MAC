@@ -154,6 +154,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_f82sq"]
+
 image = SubResource("Image_vsnok")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8tgfg"]

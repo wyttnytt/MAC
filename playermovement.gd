@@ -28,6 +28,10 @@ var thirdperson = false
 var jump_vector = Vector3(-100,-JUMP_HEIGHT,-100)
 var crouch_check = false
 var slide_check = false
+var fixed_direction = 0
+var lock_direction = false
+var test3 = Vector3.ZERO
+var last_input = Vector3.ZERO
 var headmovement = Vector3()
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
@@ -38,6 +42,8 @@ var headmovement = Vector3()
 @onready var upboy = $upboy
 @onready var othercamera = $Head/pivot/FOVcamera
 @onready var pivot = $Head/pivot
+@onready var central_force_label_z := $"../central_force_z"
+@onready var central_force_label_x := $"../central_force_x"
 @onready var label = $"../GUI/crouch_status"
 @onready var label2 = $"../GUI/total_linear_velocity"
 @onready var label3 = $"../GUI/Linear_x"
@@ -90,17 +96,32 @@ func _uncrouch_collision() -> bool:
 		var collider = upboy.get_collider()
 		return true
 	return false
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func _process(delta: float) -> void:
 	label2.text = "Total absolute velocity= " + str(abs(linear_velocity.x)+abs(linear_velocity.z))
 	label3.text = "velocity x = " + str(linear_velocity.x)
 	label4.text = "velocity z = " + str(linear_velocity.z)
 	var input:= Vector3.ZERO
-	input.x = Input.get_axis("left", "right")
-	input.z = Input.get_axis("forward", "back")	
-	input = (head.transform.basis * input).normalized()
+# does not work
+	if not slide_check:
+		input.x = Input.get_axis("left", "right")
+		input.z = Input.get_axis("forward", "back")
+		test1 = input.x
+		test2 = input.z
+		test3 = input
+		linear_damp = 2
+	if slide_check:
+		linear_damp = 0.1
+		if not lock_direction:
+			last_input = input
+			fixed_direction = head.transform.basis
+			#print((fixed_direction * Vector3(10, 0, 10)).normalized())
+			apply_central_impulse(last_input * Vector3(10, 0, 10))
+		input = (fixed_direction * input).normalized()
+		lock_direction = true
+	else:
+		lock_direction = false
+		input = (head.transform.basis * input).normalized()
 	var v = sqrt(pow(linear_velocity.x,2)+pow(linear_velocity.y,2)+pow(linear_velocity.z,2))	
 	is_on_floor = _touching_floor()
 	is_roofed = _uncrouch_collision()
@@ -108,7 +129,8 @@ func _process(delta: float) -> void:
 		apply_central_impulse(Vector3(input.x,1.0*JUMP_HEIGHT,input.z))
 	elif abs(v) < MAX_WALK_SPEED:
 		if not is_on_floor:
-			linear_damp = 0.5
+			if crouch == -1:
+			  linear_damp = 0.5
 			set_inertia(jump_vector)
 			set_gravity_scale(1.5)
 			apply_central_impulse(input*AIR_SPEED*delta)
@@ -117,7 +139,7 @@ func _process(delta: float) -> void:
 			if crouch:
 				apply_central_impulse(input*CROUCH_SPEED*delta)
 			else:
-				apply_central_impulse(input*WALK_SPEED*delta)			
+				apply_central_impulse(input*WALK_SPEED*delta)
 	else: 
 		pass
 	#crouching below
@@ -156,4 +178,3 @@ func _process(delta: float) -> void:
 		else:
 			thirdperson = false
 			camera.current = true
-	

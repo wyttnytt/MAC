@@ -423,6 +423,20 @@ libraries = {
 "": SubResource("AnimationLibrary_bk5mk")
 }
 
+[node name="central_force_z" type="Label" parent="."]
+offset_left = 2.0
+offset_top = 102.0
+offset_right = 62.0
+offset_bottom = 125.0
+text = "central force z"
+
+[node name="central_force_x" type="Label" parent="."]
+offset_left = 2.0
+offset_top = 128.0
+offset_right = 101.0
+offset_bottom = 151.0
+text = "central force x"
+
 [node name="secondplayer" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66588, 0.470425, -0.00660539)
 collision_layer = 2
