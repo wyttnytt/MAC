@@ -37,17 +37,17 @@ var headmovement = Vector3()
 @onready var camera = $Head/Camera3D
 @onready var coyote = $CoyoteTimer
 @onready var collision = $CollisionShape3D
-@onready var floor = $"../floor" 	
+@onready var floor = $"../../../../../floor"
 @onready var raycast = $RayCast3D
 @onready var upboy = $upboy
 @onready var othercamera = $Head/pivot/FOVcamera
 @onready var pivot = $Head/pivot
-@onready var central_force_label_z := $"../central_force_z"
-@onready var central_force_label_x := $"../central_force_x"
-@onready var label = $"../GUI/crouch_status"
-@onready var label2 = $"../GUI/total_linear_velocity"
-@onready var label3 = $"../GUI/Linear_x"
-@onready var label4 = $"../GUI/Linear_v"
+@onready var central_force_label_z := $"../../../../../GUI/central_force_z"
+@onready var central_force_label_x := $"../../../../../GUI/central_force_x"
+@onready var label = $"../../../../../GUI/Linear_v"
+@onready var label2 = $"../../../../../GUI/Linear_x"
+@onready var label3 = $"../../../../../GUI/total_linear_velocity"
+@onready var label4 = $"../../../../../GUI/crouch_status"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.set_contact_monitor(true)
@@ -106,8 +106,6 @@ func _process(delta: float) -> void:
 	if not slide_check:
 		input.x = Input.get_axis("left", "right")
 		input.z = Input.get_axis("forward", "back")
-		test1 = input.x
-		test2 = input.z
 		test3 = input
 		linear_damp = 2
 	if slide_check:
@@ -130,7 +128,7 @@ func _process(delta: float) -> void:
 	elif abs(v) < MAX_WALK_SPEED:
 		if not is_on_floor:
 			if crouch == -1:
-			  linear_damp = 0.5
+				linear_damp = 0.5
 			set_inertia(jump_vector)
 			set_gravity_scale(1.5)
 			apply_central_impulse(input*AIR_SPEED*delta)
