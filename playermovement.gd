@@ -58,26 +58,7 @@ func _ready() -> void:
 	upboy.enabled = true
 	
 func _unhandled_input(event):
-	headmovement.y = Input.get_axis("headup","headdown")
-	headmovement.x = Input.get_axis("headleft","headright")
-	if headmovement != Vector3.ZERO:
-		if othercamera.current == true:
-			head.rotate_y(-headmovement.x * CONTROLLER_SENSITIVITY)
-			pivot.rotate_x(-headmovement.y * CONTROLLER_SENSITIVITY)
-			pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-		else:
-			head.rotate_y(-headmovement.x * CONTROLLER_SENSITIVITY)
-			camera.rotate_x(-headmovement.y * CONTROLLER_SENSITIVITY)
-			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-	elif event is InputEventMouseMotion:
-		if othercamera.current == true:
-			head.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
-			pivot.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
-			pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-		else:
-			head.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
-			camera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
-			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+	pass
 		
 		
 		
@@ -98,6 +79,18 @@ func _uncrouch_collision() -> bool:
 	return false
 
 func _process(delta: float) -> void:
+	headmovement.y = Input.get_axis("headup","headdown")
+	headmovement.x = Input.get_axis("headleft","headright")
+	if headmovement != Vector3.ZERO:
+		if othercamera.current == true:
+			head.rotate_y(-headmovement.x * CONTROLLER_SENSITIVITY)
+			pivot.rotate_x(-headmovement.y * CONTROLLER_SENSITIVITY)
+			pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		else:
+			head.rotate_y(-headmovement.x * CONTROLLER_SENSITIVITY)
+			camera.rotate_x(-headmovement.y * CONTROLLER_SENSITIVITY)
+			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+			
 	label2.text = "Total absolute velocity= " + str(abs(linear_velocity.x)+abs(linear_velocity.z))
 	label3.text = "velocity x = " + str(linear_velocity.x)
 	label4.text = "velocity z = " + str(linear_velocity.z)

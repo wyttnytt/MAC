@@ -1,9 +1,9 @@
 [gd_scene load_steps=20 format=3 uid="uid://cbvnws21jha45"]
 
+[ext_resource type="Script" path="res://secondplayer.gd" id="2_s2gfe"]
 [ext_resource type="Script" path="res://6.gd" id="2_sa5dh"]
 [ext_resource type="Script" path="res://playermovement.gd" id="2_ye60e"]
 [ext_resource type="MeshLibrary" uid="uid://braa8y5xv3ybh" path="res://tiles.tres" id="3_86ybw"]
-[ext_resource type="Script" path="res://secondplayer.gd" id="4_pu64v"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nsb4f"]
 friction = 0.0
@@ -306,7 +306,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66588, 0.470425, -0.006605
 collision_layer = 2
 physics_material_override = SubResource("PhysicsMaterial_nsb4f")
 lock_rotation = true
-script = ExtResource("4_pu64v")
+script = ExtResource("2_s2gfe")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="splitscreen/HBoxContainer/SubViewportContainer2/SubViewport/secondplayer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
