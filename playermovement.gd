@@ -140,14 +140,14 @@ func _process(delta: float) -> void:
 		crouch = -1
 	elif crouch == 1 and abs(linear_velocity.x)+abs(linear_velocity.z)<10 and not slide_check: 
 		crouch = 0
-		$"../AnimationPlayer".play("crouch")
+		$"../../../../../AnimationPlayer".play("crouch")
 		label.text = "crouch down"
 		linear_damp = 10
 		linear_velocity = Vector3(0,0,0)
 		crouch_check = true
 	if crouch == -1 and not is_roofed and abs(linear_velocity.x)+abs(linear_velocity.z)<10 and not slide_check:
 		crouch = 0
-		$"../AnimationPlayer".play_backwards("crouch")
+		$"../../../../../AnimationPlayer".play_backwards("crouch")
 		label.text = "crouch up"
 		set_gravity_scale(1)
 		linear_damp = 5
@@ -155,12 +155,12 @@ func _process(delta: float) -> void:
 	elif crouch == 1 and abs(linear_velocity.x)+abs(linear_velocity.z)>10 and not crouch_check: 
 		crouch = 0
 		slide_check = true
-		$"../AnimationPlayer".play("crouch")
+		$"../../../../../AnimationPlayer".play("crouch")
 		label.text = "slide down"
 	elif crouch == -1 and not is_roofed and not crouch_check:
 		crouch = 0
 		slide_check = false
-		$"../AnimationPlayer".play_backwards("crouch")
+		$"../../../../../AnimationPlayer".play_backwards("crouch")
 		label.text = "slide up"
 	if Input.is_action_just_pressed("thirdperson"):
 		if not thirdperson:
