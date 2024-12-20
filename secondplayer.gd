@@ -34,13 +34,13 @@ var test3 = Vector3.ZERO
 var last_input = Vector3.ZERO
 var headmovement = Vector3()
 @onready var head = $Head
-@onready var camera = $Head/Camera3D
+@onready var camera = $Head/Camera3D2
 @onready var coyote = $CoyoteTimer
 @onready var collision = $CollisionShape3D
 @onready var floor = $"../../../../../floor"
 @onready var raycast = $RayCast3D
 @onready var upboy = $upboy
-@onready var othercamera = $Head/pivot/FOVcamera
+@onready var othercamera = $Head/pivot/FOVcamera2
 @onready var pivot = $Head/pivot
 @onready var central_force_label_z := $"../../../../../GUI/central_force_z"
 @onready var central_force_label_x := $"../../../../../GUI/central_force_x"
@@ -79,8 +79,8 @@ func _uncrouch_collision() -> bool:
 	return false
 
 func _process(delta: float) -> void:
-	headmovement.y = Input.get_axis("headup","headdown")
-	headmovement.x = Input.get_axis("headleft","headright")
+	headmovement.y = Input.get_axis("headup2","headdown2")
+	headmovement.x = Input.get_axis("headleft2","headright2")
 	if headmovement != Vector3.ZERO:
 		if othercamera.current == true:
 			head.rotate_y(-headmovement.x * CONTROLLER_SENSITIVITY)
@@ -97,8 +97,8 @@ func _process(delta: float) -> void:
 	var input:= Vector3.ZERO
 # does not work
 	if not slide_check:
-		input.x = Input.get_axis("left", "right")
-		input.z = Input.get_axis("forward", "back")
+		input.x = Input.get_axis("left2", "right2")
+		input.z = Input.get_axis("forward2", "back2")
 		test3 = input
 		linear_damp = 2
 	if slide_check:
@@ -116,7 +116,7 @@ func _process(delta: float) -> void:
 	var v = sqrt(pow(linear_velocity.x,2)+pow(linear_velocity.y,2)+pow(linear_velocity.z,2))	
 	is_on_floor = _touching_floor()
 	is_roofed = _uncrouch_collision()
-	if Input.is_action_just_pressed("jump") and is_on_floor:
+	if Input.is_action_just_pressed("jump2") and is_on_floor:
 		apply_central_impulse(Vector3(input.x,1.0*JUMP_HEIGHT,input.z))
 	elif abs(v) < MAX_WALK_SPEED:
 		if not is_on_floor:
@@ -134,13 +134,13 @@ func _process(delta: float) -> void:
 	else: 
 		pass
 	#crouching below
-	if Input.is_action_just_pressed("crouch"):
+	if Input.is_action_just_pressed("crouch2"):
 		crouch = 1
-	elif Input.is_action_just_released("crouch"):
+	elif Input.is_action_just_released("crouch2"):
 		crouch = -1
 	elif crouch == 1 and abs(linear_velocity.x)+abs(linear_velocity.z)<10 and not slide_check: 
 		crouch = 0
-		$"../../../../../AnimationPlayer".play("crouch")
+		$"../../../../../AnimationPlayer".self.play("crouch")
 		label.text = "crouch down"
 		linear_damp = 10
 		linear_velocity = Vector3(0,0,0)
@@ -162,7 +162,7 @@ func _process(delta: float) -> void:
 		slide_check = false
 		$"../../../../../AnimationPlayer".play_backwards("crouch")
 		label.text = "slide up"
-	if Input.is_action_just_pressed("thirdperson"):
+	if Input.is_action_just_pressed("thirdperson2"):
 		if not thirdperson:
 			thirdperson = true
 			othercamera.current = true
