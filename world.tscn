@@ -1,8 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://cbvnws21jha45"]
+[gd_scene load_steps=22 format=3 uid="uid://cbvnws21jha45"]
 
 [ext_resource type="Script" path="res://secondplayer.gd" id="2_s2gfe"]
 [ext_resource type="Script" path="res://6.gd" id="2_sa5dh"]
 [ext_resource type="Script" path="res://playermovement.gd" id="2_ye60e"]
+[ext_resource type="Script" path="res://Update_GUI.gd" id="4_go4n3"]
+[ext_resource type="Script" path="res://l_score.gd" id="4_qowd3"]
 [ext_resource type="MeshLibrary" uid="uid://bvwu0qo5uka6y" path="res://builds/blocks.tres" id="4_whph2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nsb4f"]
@@ -469,6 +471,49 @@ offset_top = 128.0
 offset_right = 114.0
 offset_bottom = 151.0
 text = "central force x"
+
+[node name="Control" type="Control" parent="GUI"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("4_go4n3")
+
+[node name="L_score" type="Label" parent="GUI/Control"]
+layout_mode = 0
+offset_left = 450.0
+offset_top = -1.0
+offset_right = 555.0
+offset_bottom = 41.0
+theme_override_font_sizes/font_size = 30
+text = "Score:0"
+script = ExtResource("4_qowd3")
+
+[node name="R_score" type="Label" parent="GUI/Control"]
+layout_mode = 0
+offset_left = 608.0
+offset_right = 713.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 30
+text = "Score:0"
+
+[node name="L_health" type="Label" parent="GUI/Control"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 604.0
+offset_right = 164.0
+offset_bottom = 646.0
+theme_override_font_sizes/font_size = 30
+text = "Health:0"
+
+[node name="R_health" type="Label" parent="GUI/Control"]
+layout_mode = 0
+offset_left = 599.0
+offset_top = 603.0
+offset_right = 755.0
+offset_bottom = 645.0
+theme_override_font_sizes/font_size = 30
+text = "Health:0"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
