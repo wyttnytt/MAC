@@ -8,6 +8,3 @@ extends Control
 func _process(delta: float) -> void:
 	L_score.text = str(Global.L_score)
 	R_score.text = str(Global.R_score)
-	L_health.text = str(Global.L_health)
-	R_health.text = str(Global.R_health)
-	
