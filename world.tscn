@@ -6,9 +6,9 @@
 [ext_resource type="Script" path="res://Update_GUI.gd" id="4_go4n3"]
 [ext_resource type="MeshLibrary" uid="uid://bvwu0qo5uka6y" path="res://builds/blocks.tres" id="4_whph2"]
 [ext_resource type="Texture2D" uid="uid://bby08v0gtl6cw" path="res://assets/score.png" id="5_7qtid"]
-[ext_resource type="Texture2D" uid="uid://mqenbyi8rop" path="res://assets/healthbarUnder.png" id="6_7ay4c"]
 [ext_resource type="Script" path="res://right_health.gd" id="6_odjrl"]
-[ext_resource type="Texture2D" uid="uid://ddpus5nmfdjm6" path="res://assets/healthbarProgress.png" id="7_ypc86"]
+[ext_resource type="Texture2D" uid="uid://dicnv2ll2p88d" path="res://assets/graybar.png" id="7_tgmu8"]
+[ext_resource type="Texture2D" uid="uid://clbcrg6xjy2mg" path="res://assets/red bar.png" id="8_ba85q"]
 [ext_resource type="Script" path="res://left_health.gd" id="9_re2xc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nsb4f"]
@@ -506,43 +506,51 @@ offset_bottom = 100.0
 theme_override_font_sizes/font_size = 30
 text = "0"
 
-[node name="right_health" type="Control" parent="GUI/Control"]
+[node name="Control" type="Control" parent="GUI/Control"]
+anchors_preset = 0
+offset_left = 2.0
+offset_top = 573.0
+offset_right = 1151.0
+offset_bottom = 685.0
+
+[node name="right_health" type="Control" parent="GUI/Control/Control"]
 layout_mode = 1
 anchor_top = 0.935
 anchor_bottom = 0.935
-offset_left = 741.0
-offset_top = -28.8801
-offset_right = 1141.0
-offset_bottom = 36.1199
+offset_left = 599.0
+offset_top = -108.85
+offset_right = 1149.0
+offset_bottom = -43.85
 script = ExtResource("6_odjrl")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/right_health"]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/Control/right_health"]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 10.0
-offset_right = 90.0
-offset_bottom = 39.0
-scale = Vector2(5.5, 3)
-texture_under = ExtResource("6_7ay4c")
-texture_progress = ExtResource("7_ypc86")
+offset_left = 274.0
+offset_top = -0.869982
+offset_right = 574.0
+offset_bottom = 93.13
+scale = Vector2(0.852844, 0.738621)
+value = 100.0
+texture_under = ExtResource("7_tgmu8")
+texture_progress = ExtResource("8_ba85q")
 
-[node name="left_health" type="Control" parent="GUI/Control"]
+[node name="left_health" type="Control" parent="GUI/Control/Control"]
 anchors_preset = 0
-offset_left = 178.0
-offset_top = 571.0
-offset_right = 547.0
-offset_bottom = 631.0
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 581.0
+offset_bottom = 70.0
 script = ExtResource("9_re2xc")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/left_health"]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/Control/left_health"]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 10.0
-offset_right = 90.0
-offset_bottom = 39.0
-scale = Vector2(5.5, 3)
-texture_under = ExtResource("6_7ay4c")
-texture_progress = ExtResource("7_ypc86")
+offset_left = 10.0
+offset_top = -17.0
+offset_right = 310.0
+offset_bottom = 77.0
+scale = Vector2(0.853, 0.739)
+texture_under = ExtResource("7_tgmu8")
+texture_progress = ExtResource("8_ba85q")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
