@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cbvnws21jha45"]
+[gd_scene load_steps=28 format=3 uid="uid://cbvnws21jha45"]
 
 [ext_resource type="Script" path="res://secondplayer.gd" id="2_s2gfe"]
 [ext_resource type="Script" path="res://6.gd" id="2_sa5dh"]
@@ -9,7 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://c3r5v8sxsavc2" path="res://assets/crosshair.png" id="6_1wfdj"]
 [ext_resource type="Texture2D" uid="uid://crle4a6pj7jhf" path="res://assets/graybar (2).png" id="7_cgf0f"]
 [ext_resource type="Texture2D" uid="uid://sbb0j3fnlxif" path="res://assets/redbar.png" id="8_odhvo"]
+[ext_resource type="Texture2D" uid="uid://cvxvam6bxsixc" path="res://assets/dash (2).png" id="10_0ciuf"]
 [ext_resource type="Texture2D" uid="uid://b1vs5ng6nk1sh" path="res://assets/bluebar.png" id="10_dvh5t"]
+[ext_resource type="Texture2D" uid="uid://b6xw0s3ieugc5" path="res://assets/dashbar (1).png" id="11_7ehsu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nsb4f"]
 friction = 0.0
@@ -527,10 +529,10 @@ scale = Vector2(0.068038, 0.0709823)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/leftside/left_health"]
 layout_mode = 0
-offset_top = -17.4789
+offset_top = -12.236
 offset_right = 300.0
-offset_bottom = 76.5211
-scale = Vector2(1.13799, 0.770044)
+offset_bottom = 81.764
+scale = Vector2(0.962915, 0.629479)
 texture_under = ExtResource("7_cgf0f")
 texture_progress = ExtResource("8_odhvo")
 
@@ -546,13 +548,29 @@ scale = Vector2(0.0719973, -0.0970007)
 [node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/leftside/Left_stamina"]
 layout_mode = 0
 offset_left = 16.3972
-offset_top = 12.7906
+offset_top = 10.2325
 offset_right = 318.397
-offset_bottom = 99.7906
-scale = Vector2(0.778387, 0.484296)
+offset_bottom = 97.2329
+scale = Vector2(0.648367, 0.39349)
 value = 100.0
 texture_under = ExtResource("7_cgf0f")
 texture_progress = ExtResource("10_dvh5t")
+
+[node name="dash" type="Control" parent="GUI/Control/leftside"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/leftside/dash"]
+layout_mode = 0
+offset_left = 22.2917
+offset_top = 35.2978
+offset_right = 422.292
+offset_bottom = 435.298
+scale = Vector2(0.0102618, 0.00955675)
+fill_mode = 2
+texture_under = ExtResource("10_0ciuf")
+texture_progress = ExtResource("11_7ehsu")
 
 [node name="rightside" type="Control" parent="GUI/Control"]
 layout_mode = 3
@@ -579,11 +597,11 @@ scale = Vector2(0.0716141, 0.0603484)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/rightside/right_health"]
 layout_mode = 0
-offset_left = 209.056
-offset_top = -1.92701
-offset_right = 509.056
-offset_bottom = 92.073
-scale = Vector2(1.12105, 0.889534)
+offset_left = 261.07
+offset_top = 0.134117
+offset_right = 561.07
+offset_bottom = 94.1341
+scale = Vector2(0.949217, 0.778805)
 value = 100.0
 texture_under = ExtResource("7_cgf0f")
 texture_progress = ExtResource("8_odhvo")
@@ -600,14 +618,33 @@ scale = Vector2(0.0721159, 0.0609216)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/rightside/right_stamina"]
 layout_mode = 0
-offset_left = 295.012
-offset_top = -6.12479
-offset_right = 597.012
-offset_bottom = 80.8752
-scale = Vector2(0.82313, 0.777879)
+offset_left = 333.751
+offset_top = 7.14568
+offset_right = 635.751
+offset_bottom = 94.1457
+scale = Vector2(0.682962, 0.655419)
 value = 100.0
 texture_under = ExtResource("7_cgf0f")
 texture_progress = ExtResource("10_dvh5t")
+
+[node name="dash" type="Control" parent="GUI/Control/rightside"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -8.38109
+offset_top = -0.186567
+offset_right = 31.6189
+offset_bottom = 39.8134
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="GUI/Control/rightside/dash"]
+layout_mode = 0
+offset_left = 21.3467
+offset_top = 35.3856
+offset_right = 421.347
+offset_bottom = 435.386
+scale = Vector2(0.0102618, 0.00955675)
+fill_mode = 2
+texture_under = ExtResource("10_0ciuf")
+texture_progress = ExtResource("11_7ehsu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

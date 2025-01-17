@@ -9,3 +9,5 @@ extends Node
 @onready var L_stamina = 80
 @onready var R_stamina = 80
 @onready var time = 0.0
+@onready var L_dash = 0
+@onready var R_dash = 0
